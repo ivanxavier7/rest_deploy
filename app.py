@@ -1,6 +1,9 @@
+import os
+
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
+
 from resources.user import UserRegister
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
@@ -9,7 +12,7 @@ from security import authenticate, identity
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'     # Same Folder
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')     # Same Folder
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False    # Turns off Flask tracker, to use only SQLAlchemy tracker
 app.secret_key = 'password'
 api = Api(app)
