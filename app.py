@@ -12,7 +12,10 @@ from security import authenticate, identity
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')     # Same Folder
+env_db_var = os.environ.get('DATABASE_URL', 'sqlite:///data.db')     # Same Folder
+if env_db_var.startswith("postgres://"):
+    uri = env_db_var.replace("postgres://", "postgresql://", 1) # Fix MySQLAlchemy version bugs
+app.config['SQLALCHEMY_DATABASE_URI'] = env_db_var
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False    # Turns off Flask tracker, to use only SQLAlchemy tracker
 app.secret_key = 'password'
 api = Api(app)
