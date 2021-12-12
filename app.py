@@ -5,7 +5,7 @@ from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
 
-from resources.user import UserRegister
+from resources.user import User, UserRegister
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 
@@ -18,6 +18,7 @@ if env_db_var.startswith("postgres://"):
     uri = env_db_var.replace("postgres://", "postgresql://", 1) # Fix MySQLAlchemy version bugs
 app.config['SQLALCHEMY_DATABASE_URI'] = env_db_var
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False    # Turns off Flask tracker, to use only SQLAlchemy tracker
+app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'password'
 api = Api(app)
 
@@ -30,7 +31,7 @@ api.add_resource(Item, '/item/<string:name>') # https://127.0.0.1:5000/item/Exem
 api.add_resource(ItemList, '/items')
 api.add_resource(StoreList, '/stores')
 api.add_resource(UserRegister, '/register')
-
+api.add_resource(User, '/user/<int:user_id>')
 
 
 if __name__ == '__main__':
