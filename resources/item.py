@@ -17,7 +17,7 @@ class Item(Resource):
         help="Every item needs a store id."
         )
     
-    @jwt_required   # Decorator that require de authentication before "get"
+    @jwt_required()   # Decorator that require de authentication before "get"
     def get(self, name):
         item =ItemModel.find_by_name(name)
         if item:
