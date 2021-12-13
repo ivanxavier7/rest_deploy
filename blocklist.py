@@ -1,1 +1,1 @@
-BLOCKLIST = {2, 3}  # User ID's to block access
+BLOCKLIST = set()  # Logout set

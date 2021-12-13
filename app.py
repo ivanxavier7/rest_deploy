@@ -5,7 +5,7 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
-from resources.user import User, UserRegister, UserLogin, TokenRefresh
+from resources.user import User, UserRegister, UserLogin, TokenRefresh, UserLogout
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 from blocklist import BLOCKLIST
@@ -28,7 +28,7 @@ jwt = JWTManager(app)  # send user and password with authenticate, if match uses
 
 @jwt.token_in_blocklist_loader
 def check_if_token_in_blocklist(jwt_header, jwt_payload):
-    return jwt_payload['sub'] in BLOCKLIST
+    return jwt_payload['jti'] in BLOCKLIST
 
 @jwt.additional_claims_loader
 def add_claims_to_jwt(sub):     # sub has the user.id value
@@ -76,6 +76,7 @@ api.add_resource(UserRegister, '/register')
 api.add_resource(User, '/user/<int:user_id>')
 api.add_resource(UserLogin, '/login')
 api.add_resource(TokenRefresh, '/refresh')
+api.add_resource(UserLogout, '/logout')
 
 
 if __name__ == '__main__':
