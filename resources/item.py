@@ -38,7 +38,7 @@ class Item(Resource):
         return item.json(), 201                # CREATED
     
 
-    @jwt_required
+    @jwt_required()
     def delete(self, name):
         claims = get_jwt()   # Claim data from token, is this case just admin can delete items
         if not claims['is_admin']:
