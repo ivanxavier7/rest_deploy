@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt
 from models.item import ItemModel
 
 class Item(Resource):
@@ -40,7 +40,7 @@ class Item(Resource):
 
     @jwt_required
     def delete(self, name):
-        claims = get_jwt_claims()   # Claim data from token, is this case just admin can delete items
+        claims = get_jwt()   # Claim data from token, is this case just admin can delete items
         if not claims['is_admin']:
             return {'message': 'Admin privilege required.'}, 401
         
