@@ -28,7 +28,7 @@ jwt = JWTManager(app)  # send user and password with authenticate, if match uses
 
 @jwt.token_in_blocklist_loader
 def check_if_token_in_blocklist(jwt_header, jwt_payload):
-    return jwt_payload['type'] in BLOCKLIST
+    return jwt_payload['sub'] in BLOCKLIST
 
 @jwt.additional_claims_loader
 def add_claims_to_jwt(sub):     # sub has the user.id value
