@@ -28,7 +28,7 @@ class Item(Resource):
             return item.json()
         return {'message': 'Item not found'}, 404
     
-    @jwt_required(fresh=True) # Need fresh token
+    @jwt_required(fresh=False) # Need fresh token to be false
     def post(self, name):
         if ItemModel.find_by_name(name):
             return {'message': "An item with name '{}' already exists.".format(name)}, 400  # BAD REQUEST
