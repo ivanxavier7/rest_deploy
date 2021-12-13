@@ -26,7 +26,7 @@ api = Api(app)
 
 jwt = JWTManager(app)  # send user and password with authenticate, if match uses de JWT token in identity to search the user that is token represents
 
-@jwt.token_in_blocklist_Loader
+@jwt.token_in_blocklist_loader
 def check_if_token_in_blocklist(jwt_header, jwt_payload):
     return jwt_payload['access'] in BLOCKLIST
 
