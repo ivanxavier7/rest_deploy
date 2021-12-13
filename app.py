@@ -25,6 +25,14 @@ api = Api(app)
 
 jwt = JWTManager(app)  # send user and password with authenticate, if match uses de JWT token in identity to search the user that is token represents
 
+
+@jwt.additional_claims_loader
+def add_claims_to_jwt(sub):     # sub has the user.id value
+    if sub == 1:                # First user will be admin
+        return {'is_admin': True}
+    return {'is_admin': False}
+
+
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(Item, '/item/<string:name>') # https://127.0.0.1:5000/item/Exemplo
 api.add_resource(ItemList, '/items')
